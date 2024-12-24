@@ -1,0 +1,22 @@
+import xlwings as xw
+import os
+import shutil
+ 
+ws = xw.Book("FolderInput.xlsx").sheets['Data']
+last_row = ws.range('A1').end('down').row 
+ 
+for i in range (2,last_row + 1):
+
+    file_name = ws.range("B" + str(i)).value + ws.range("E" + str(i)).value
+    sou_fol = ws.range("C" + str(i)).value
+    Dest_fol = ws.range("D" + str(i)).value 
+
+    source = sou_fol + "\\"+ file_name
+    destination = Dest_fol + "\\" + file_name
+
+    if not os.path.isdir(Dest_fol):
+        os.makedirs(Dest_fol)
+
+    shutil.move(source, destination)
+
+print("Done")
